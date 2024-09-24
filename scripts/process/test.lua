@@ -2,8 +2,8 @@ local process = Process("test")
 
 function process:onStart()
     
-    print("Hello, X - LIK!")
-    echo("你好，X - LIK！")
+    print("Hello, XLIK!")
+    echo("你好，XLIK！")
     
     sound.bgm("Sound\\Music\\mp3Music\\ArthasTheme.mp3")
     time.setTimeout(10, function()
