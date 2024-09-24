@@ -2,12 +2,12 @@ local process = Process("test")
 
 function process:onStart()
     
-    print("Hello, Lik!")
-    echo("你好，Lik！")
+    print("Hello, X - LIK!")
+    echo("你好，X - LIK！")
     
     sound.bgm("Sound\\Music\\mp3Music\\ArthasTheme.mp3")
     time.setTimeout(10, function()
-        sound.bgm("lik")
+        sound.bgm("xlik")
     end)
     
     local bubble = self:bubble()
