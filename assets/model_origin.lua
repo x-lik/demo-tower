@@ -890,20 +890,6 @@ assets_model("units\\nightelf\\SpiritOfVengeance\\SpiritOfVengeance.mdl", "Aveng
 assets_model("units\\nightelf\\Vengeance\\Vengeance.mdl", "AvengingWatcher")
 --守望者(暗杀)
 assets_model("units\\creeps\\assassin\\assassin.mdl", "Assassin")
---战争古树
-assets_model("buildings\\nightelf\\AncientOfWar\\AncientOfWar.mdl", "AncientOfWar")
---战争古树(堕落)
-assets_model("buildings\\demon\\CorruptedAncientofWar\\CorruptedAncientofWar.mdl", "CorruptedAncientOfWar")
---知识古树
-assets_model("buildings\\nightelf\\AncientOfLore\\AncientOfLore.mdl", "AncientOfLore")
---风之古树
-assets_model("buildings\\nightelf\\AncientOfWind\\AncientOfWind.mdl", "AncientOfWind")
---远古守卫者
-assets_model("buildings\\nightelf\\AncientProtector\\AncientProtector.mdl", "AncientProtector")
---远古守卫者(堕落)
-assets_model("buildings\\demon\\CorruptedAncientProtector\\CorruptedAncientProtector.mdl", "CorruptedAncientProtector")
---奇迹古树
-assets_model("buildings\\nightelf\\AncientOfWonder\\AncientOfWonder.mdl", "AncientOfWonder")
 
 --飞蛇
 assets_model("units\\naga\\WindSerpent\\WindSerpent.mdl", "WindSerpent")
@@ -1247,8 +1233,163 @@ assets_model("units\\critters\\VillagerKid\\VillagerKid.mdl", "VillagerKid1")
 --村民小孩2
 assets_model("units\\critters\\VillagerKid1\\VillagerKid1.mdl", "VillagerKid2")
 
+--【 建筑模型 】
+
+--城镇大厅
+--主城：配置动画名upgrade,first
+--城堡：配置动画名upgrade,second
+assets_model("buildings\\human\\TownHall\\TownHall.mdl", "TownHall")
+--农场
+assets_model("buildings\\human\\Farm\\Farm.mdl", "Farm")
+--国王祭坛
+assets_model("buildings\\human\\AltarofKings\\AltarofKings.mdl", "AltarofKings")
+--兵营
+assets_model("buildings\\human\\HumanBarracks\\HumanBarracks.mdl", "HumanBarracks")
+--伐木场
+assets_model("buildings\\human\\HumanLumbermill\\HumanLumbermill.mdl", "HumanLumbermill")
+--铁匠铺
+assets_model("buildings\\human\\Blacksmith\\Blacksmith.mdl", "Blacksmith")
+--车间
+assets_model("buildings\\human\\Workshop\\Workshop.mdl", "Workshop")
+--神秘圣地
+assets_model("buildings\\human\\ArcaneSanctum\\ArcaneSanctum.mdl", "ArcaneSanctum")
+--狮鹫笼
+assets_model("buildings\\human\\GryphonAviary\\GryphonAviary.mdl", "GryphonAviary")
+--哨塔
+--防御塔：配置动画名upgrade,first
+--炮塔：配置动画名upgrade,second
+--神秘之塔：配置动画名upgrade,third
+assets_model("buildings\\human\\HumanTower\\HumanTower.mdl", "HumanTower")
+--神秘藏宝室
+assets_model("buildings\\human\\ArcaneVault\\ArcaneVault.mdl", "ArcaneVault")
+--冰之宝盒
+assets_model("buildings\\other\\IceCrownTreasureBox\\IceCrownTreasureBox.mdl", "IceCrownTreasureBox")
+--水果店
+assets_model("buildings\\other\\FruitStand\\FruitStand.mdl", "FruitStand")
+
+--兽族大厅
+--要塞：配置动画名upgrade,first
+--堡垒：配置动画名upgrade,second
+assets_model("buildings\\orc\\GreatHall\\GreatHall.mdl", "GreatHall")
+--风暴祭坛
+assets_model("buildings\\orc\\AltarofStorms\\AltarofStorms.mdl", "AltarofStorms")
+--兵营
+assets_model("buildings\\orc\\OrcBarracks\\OrcBarracks.mdl", "OrcBarracks")
+--战争磨坊
+assets_model("buildings\\orc\\WarMill\\WarMill.mdl", "WarMill")
+--牛头人图腾
+assets_model("buildings\\orc\\TaurenTotem\\TaurenTotem.mdl", "TaurenTotem")
+--灵魂归宿
+assets_model("buildings\\orc\\SpiritLodge\\SpiritLodge.mdl", "SpiritLodge")
+--兽栏
+assets_model("buildings\\orc\\Beastiary\\Beastiary.mdl", "Beastiary")
+--兽族地洞
+assets_model("buildings\\orc\\TrollBurrow\\TrollBurrow.mdl", "TrollBurrow")
+--了望塔
+assets_model("buildings\\orc\\WatchTower\\WatchTower.mdl", "WatchTower")
+--巫毒商店
+assets_model("buildings\\orc\\VoodooLounge\\VoodooLounge.mdl", "VoodooLounge")
+--能量产生器(粉光)
+assets_model("buildings\\other\\PowerGenerator\\PowerGenerator.mdl", "PowerGenerator")
+--双足飞龙牢笼
+assets_model("buildings\\other\\WyvernCage\\WyvernCage.mdl", "WyvernCage")
+--猪圈农场
+assets_model("buildings\\other\\PigFarm\\PigFarm.mdl", "PigFarm")
+
+--大墓地
+--亡者大厅：配置动画名upgrade,first
+--黑色城堡：配置动画名upgrade,second
+assets_model("buildings\\undead\\Necropolis\\Necropolis.mdl", "Necropolis")
+--通灵塔
+--幽魂之塔：配置动画名upgrade,first
+--蛛网怪塔：配置动画名upgrade,second
+assets_model("buildings\\undead\\Ziggurat\\Ziggurat.mdl", "Ziggurat")
+--黑暗祭坛
+assets_model("buildings\\undead\\AltarOfDarkness\\AltarOfDarkness.mdl", "AltarOfDarkness")
+--地穴
+assets_model("buildings\\undead\\Crypt\\Crypt.mdl", "Crypt")
+--牺牲深渊
+assets_model("buildings\\undead\\SacrificialPit\\SacrificialPit.mdl", "SacrificialPit")
+--坟场
+assets_model("buildings\\undead\\Graveyard\\Graveyard.mdl", "Graveyard")
+--屠宰场
+assets_model("buildings\\undead\\Slaughterhouse\\Slaughterhouse.mdl", "Slaughterhouse")
+--诅咒神庙
+assets_model("buildings\\undead\\TempleOfTheDamned\\TempleOfTheDamned.mdl", "TempleOfTheDamned")
+--埋骨地
+assets_model("buildings\\undead\\BoneYard\\BoneYard.mdl", "BoneYard")
+--古墓废墟
+assets_model("buildings\\undead\\TombOfRelics\\TombOfRelics.mdl", "TombOfRelics")
+--神殿
+assets_model("buildings\\other\\SacrificialAltar\\SacrificialAltar.mdl", "SacrificialAltar")
+--恶魔之门
+assets_model("buildings\\demon\\DemonGate\\DemonGate.mdl", "DemonGate")
 --召唤底座之书
 assets_model("buildings\\other\\BookOfSummoning\\BookOfSummoning.mdl", "BookOfSummoning")
+
+--生命之树
+--远古之树：配置动画名upgrade,first
+--永恒之树：配置动画名upgrade,second
+assets_model("buildings\\nightelf\\TreeofLife\\TreeofLife.mdl", "TreeofLife")
+--月亮井
+assets_model("buildings\\nightelf\\MoonWell\\MoonWell.mdl", "MoonWell")
+--长者祭坛
+assets_model("buildings\\nightelf\\AltarOfElders\\AltarOfElders.mdl", "AltarOfElders")
+--战争古树
+assets_model("buildings\\nightelf\\AncientOfWar\\AncientOfWar.mdl", "AncientOfWar")
+--战争古树(堕落)
+assets_model("buildings\\demon\\CorruptedAncientofWar\\CorruptedAncientofWar.mdl", "CorruptedAncientOfWar")
+--知识古树
+assets_model("buildings\\nightelf\\AncientOfLore\\AncientOfLore.mdl", "AncientOfLore")
+--风之古树
+assets_model("buildings\\nightelf\\AncientOfWind\\AncientOfWind.mdl", "AncientOfWind")
+--猎手大厅
+assets_model("buildings\\nightelf\\HuntersHall\\HuntersHall.mdl", "HuntersHall")
+--远古守卫者
+assets_model("buildings\\nightelf\\AncientProtector\\AncientProtector.mdl", "AncientProtector")
+--远古守卫者(堕落)
+assets_model("buildings\\demon\\CorruptedAncientProtector\\CorruptedAncientProtector.mdl", "CorruptedAncientProtector")
+--奇美拉栖木
+assets_model("buildings\\nightelf\\ChimaeraRoost\\ChimaeraRoost.mdl", "ChimaeraRoost")
+--奇迹古树
+assets_model("buildings\\nightelf\\AncientOfWonder\\AncientOfWonder.mdl", "AncientOfWonder")
+--兽穴
+assets_model("buildings\\other\\BarrowDens\\BarrowDens.mdl", "BarrowDens")
+--半神赛纳留斯之角
+assets_model("buildings\\other\\HornOfCenarius\\HornOfCenarius.mdl", "HornOfCenarius")
+
+--金矿
+assets_model("buildings\\\\other\\\\GoldMine\\\\GoldMine.mdl", "GoldMine")
+--地精商店
+assets_model("buildings\\other\\Merchant\\Merchant.mdl", "Merchant")
+--生命之泉
+assets_model("buildings\\other\\FountainOfLife\\FountainOfHealth.mdl", "FountainOfHealth")
+--魔法之泉
+assets_model("buildings\\other\\FountainOfMana\\FountainOfMana.mdl", "FountainOfMana")
+--血浴之泉
+assets_model("buildings\\other\\FountainOfLifeBlood\\FountainOfLifeBlood.mdl", "FountainOfLifeBlood")
+--毒血之泉
+assets_model("buildings\\other\\FountainOfLifeDefiled\\FountainOfLifeDefiled.mdl", "FountainOfLifeDefiled")
+--地精实验室
+assets_model("buildings\\other\\AmmoDump\\AmmoDump.mdl", "AmmoDump")
+--传送门
+assets_model("buildings\\other\\Waygate\\Waygate.mdl", "Waygate")
+--黑龙巢穴
+assets_model("buildings\\other\\DragonBuildingBlack\\DragonBuildingBlack.mdl", "DragonBuildingBlack")
+--红龙巢穴
+assets_model("buildings\\other\\DragonBuilding\\DragonBuilding.mdl", "DragonBuilding")
+--蓝龙巢穴
+assets_model("buildings\\other\\DragonBuildingBlue\\DragonBuildingBlue.mdl", "DragonBuildingBlue")
+--绿龙巢穴
+assets_model("buildings\\other\\DragonBuildingGreen\\DragonBuildingGreen.mdl", "DragonBuildingGreen")
+--青龙巢穴
+assets_model("buildings\\other\\DragonRoost\\DragonRoost.mdl", "DragonRoost")
+--雇佣兵营地
+assets_model("buildings\\other\\Mercenary\\Mercenary.mdl", "Mercenary")
+--小酒馆
+assets_model("buildings\\other\\Tavern\\Tavern.mdl", "Tavern")
+--市场
+assets_model("buildings\\other\\Marketplace\\Marketplace.mdl", "Marketplace")
 
 --【 物品模型 】
 
