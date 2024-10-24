@@ -1,5 +1,33 @@
 -- 指针配置
 game.onStart(function()
+    -- 自定义选择圈
+    J.EnableSelect(true, false)
+    local sel = Image("ReplaceableTextures\\Selection\\SelectionCircleLarge.blp", 72, 72):show(false)
+    japi.AsyncRefresh("csSel", function()
+        local o = PlayerLocal():selection()
+        if (class.isObject(o, UnitClass) and o:isAlive() and false == o:isLocust()) then
+            local s = 72 * o:scale()
+            if (s > 0) then
+                ---@type Image
+                sel:size(s, s)
+                sel:position(o:x(), o:y())
+                if (o:owner():handle() == player.localHandle) then
+                    sel:rgba(0, 255, 0, 255)
+                elseif (J.IsUnitEnemy(o:handle(), player.localHandle)) then
+                    sel:rgba(255, 0, 0, 255)
+                else
+                    sel:rgba(255, 255, 0, 255)
+                end
+                sel:show(true)
+            else
+                sel:show(false)
+            end
+        else
+            sel:show(false)
+        end
+    end)
+    
+    -- 自定义指针选取
     local csFollow = UIBackdrop("myFollow", UIGame):show(false) -- 跟踪比指针底层所以先定义
     local csPointer = UIBackdrop("myPointer", UIGame):adaptive(true):size(0.01, 0.01)
     local csArea = Image(X_UI_NIL, 16, 16):show(false)
@@ -40,8 +68,8 @@ game.onStart(function()
         circle = nil,
         square = {
             alpha = 150,
-            enable = TEAM_COLOR_BLP_LIGHT_BLUE,
-            disable = TEAM_COLOR_BLP_RED,
+            enable = BLP_COLOR_LIGHT_BLUE,
+            disable = BLP_COLOR_RED,
         },
     }
     
@@ -75,9 +103,8 @@ game.onStart(function()
         end
         return true
     end
-    ---@param ab Ability
-    ---@return boolean
-    local abilityStart = function(ab)
+    --- cursor lock
+    local cursorLock = function()
         if (class.isObject(_timer1, TimerAsyncClass)) then
             class.destroy(_timer1)
             _timer1 = nil
@@ -91,6 +118,22 @@ game.onStart(function()
                 _timer1 = nil
             end)
         end
+    end
+    --- cursor unlock
+    local cursorUnLock = function()
+        if (class.isObject(_timer1, TimerAsyncClass)) then
+            class.destroy(_timer1)
+            _timer1 = nil
+        end
+        _timer1 = async.setTimeout(60, function()
+            J.EnableSelect(true, false)
+            _timer1 = nil
+        end)
+    end
+    ---@param ab Ability
+    ---@return boolean
+    local abilityStart = function(ab)
+        cursorLock()
         ---@type UI_LikPlate
         local uiPlate = UIKit("xlik_plate")
         uiPlate:buttonBorder(ab)
@@ -104,10 +147,7 @@ game.onStart(function()
             local uiPlate = UIKit("xlik_plate")
             uiPlate:buttonBorder(ab)
         end
-        _timer1 = async.setTimeout(60, function()
-            J.EnableSelect(true, false)
-            _timer1 = nil
-        end)
+        cursorUnLock()
     end
     
     -- 自定义默认指针逻辑
@@ -716,6 +756,7 @@ game.onStart(function()
     
     cursor.setQuote("follow", {
         start = function()
+            cursorLock()
             local data = cursor.currentData()
             ---@type Ability|Item
             local obj = data.object
@@ -771,6 +812,7 @@ game.onStart(function()
             end
         end,
         over = function()
+            cursorUnLock()
             csFollow:show(false)
             local data = cursor.currentData()
             data.over()
