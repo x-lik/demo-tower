@@ -1,5 +1,5 @@
 -- 游戏信息
-game.onStart(function()
+game.onPhase("process", function()
     
     --- 中央顶部信息
     time.setInterval(1, function()
