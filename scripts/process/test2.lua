@@ -1,4 +1,4 @@
-local process = Process("test")
+local process = Process("test2")
 
 function process:onStart()
     
@@ -62,6 +62,20 @@ function process:onStart()
             route = { { 2560, -1024 }, { 1280, -1024 }, { 1280, -2048 }, { 0, -2048 }, { 0, 0 } }
         },
     }
+    local baseHP = 20
+    bubble["base0"] = Region("base0", "square", 0, 0, 120, 120)
+    ---@param evtData eventOnRegionEnter
+    bubble["base0"]:onEvent(eventKind.regionEnter, function(evtData)
+        effector.point("MassTeleportTarget", evtData.triggerUnit:x(), evtData.triggerUnit:y(), nil, 0.5)
+        class.destroy(evtData.triggerUnit)
+        baseHP = baseHP - 1
+        if (baseHP <= 0) then
+            local tips = "被突破咯~"
+            for i = 1, 4, 1 do
+                Player(i):quit(tips)
+            end
+        end
+    end)
     bubble.monTimer = time.setInterval(1, function(curTimer)
         curTimer:period(60)
         cur = cur + 1
@@ -86,6 +100,8 @@ function process:onStart()
             end
         end)
     end)
+    
+    -- 临时信息展示
     local ui = UIText("monTimer", UIGame)
         :relation(UI_ALIGN_TOP, UIGame, UI_ALIGN_TOP, 0, -0.07)
         :textAlign(TEXT_ALIGN_CENTER)
