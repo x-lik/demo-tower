@@ -64,7 +64,6 @@ function process:onStart()
     }
     local baseHP = 20
     bubble["base0"] = Region("base0", "square", 0, 0, 120, 120)
-    bubble["base0"]._period = 0.2
     ---@param evtData eventOnRegionEnter
     bubble["base0"]:onEvent(eventKind.regionEnter, function(evtData)
         effector.point("MassTeleportTarget", evtData.triggerUnit:x(), evtData.triggerUnit:y(), nil, 0.5)
@@ -84,7 +83,7 @@ function process:onStart()
             local rt = route[i]
             local next = route[i + 1]
             local r = Region(k, "square", rt[1], rt[2], 100, 100)
-            r._period = 0.5
+            r:setPeriod(0.3)
             ---@param evtData eventOnRegionEnter
             r:onEvent(eventKind.regionEnter, function(evtData)
                 evtData.triggerUnit:orderMove(next[1], next[2])
