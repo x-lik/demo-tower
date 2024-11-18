@@ -107,7 +107,7 @@ function process:onStart()
         :textAlign(TEXT_ALIGN_CENTER)
         :fontSize(12)
     bubble.uiTimer = time.setInterval(1, function()
-        ui:text("第" .. cur .. "波：" .. math.floor(bubble.monTimer:remain()))
+        ui:text("HP: " .. baseHP .. "|n第" .. cur .. "波：" .. math.floor(bubble.monTimer:remain()))
     end)
     
     -- 敌人奖励

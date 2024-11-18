@@ -66,13 +66,16 @@ function process:onStart()
     bubble["base0"] = Region("base0", "square", 0, 0, 120, 120)
     ---@param evtData eventOnRegionEnter
     bubble["base0"]:onEvent(eventKind.regionEnter, function(evtData)
-        effector.point("MassTeleportTarget", evtData.triggerUnit:x(), evtData.triggerUnit:y(), nil, 0.5)
-        class.destroy(evtData.triggerUnit)
-        baseHP = baseHP - 1
-        if (baseHP <= 0) then
-            local tips = "被突破咯~"
-            for i = 1, 4, 1 do
-                Player(i):quit(tips)
+        local tu = evtData.triggerUnit
+        if (enemyTeam:is(tu)) then
+            effector.point("MassTeleportTarget", tu:x(), tu:y(), nil, 0.5)
+            class.destroy(tu)
+            baseHP = baseHP - 1
+            if (baseHP <= 0) then
+                local tips = "被突破咯~"
+                for i = 1, 4, 1 do
+                    Player(i):quit(tips)
+                end
             end
         end
     end)
@@ -86,7 +89,9 @@ function process:onStart()
             r:setPeriod(0.3)
             ---@param evtData eventOnRegionEnter
             r:onEvent(eventKind.regionEnter, function(evtData)
-                evtData.triggerUnit:orderMove(next[1], next[2])
+                if (enemyTeam:is(evtData.triggerUnit)) then
+                    evtData.triggerUnit:orderMove(next[1], next[2])
+                end
             end)
             -- 调试模式搞点贴图方便看
             if (LK_DEBUG) then
@@ -126,7 +131,7 @@ function process:onStart()
         :textAlign(TEXT_ALIGN_CENTER)
         :fontSize(12)
     bubble.uiTimer = time.setInterval(1, function()
-        ui:text("第" .. cur .. "波：" .. math.floor(bubble.monTimer:remain()))
+        ui:text("HP: " .. baseHP .. "|n第" .. cur .. "波：" .. math.floor(bubble.monTimer:remain()))
     end)
     
     -- 敌人奖励
