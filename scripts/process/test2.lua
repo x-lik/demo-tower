@@ -62,22 +62,45 @@ function process:onStart()
             route = { { 2560, -1024 }, { 1280, -1024 }, { 1280, -2048 }, { 0, -2048 }, { 0, 0 } }
         },
     }
-    local baseHP = 20
-    bubble["base0"] = Region("base0", "square", 0, 0, 120, 120)
-    ---@param evtData eventOnRegionEnter
-    bubble["base0"]:onEvent(eventKind.regionEnter, function(evtData)
-        effector.point("MassTeleportTarget", evtData.triggerUnit:x(), evtData.triggerUnit:y(), nil, 0.5)
-        class.destroy(evtData.triggerUnit)
-        baseHP = baseHP - 1
-        if (baseHP <= 0) then
-            local tips = "被突破咯~"
-            for i = 1, 4, 1 do
-                Player(i):quit(tips)
+    local baseHP = 999
+    bubble["base0"] = Region("base0", "square", 0, 0, 150, 150)
+    bubble["base0"]:setEventMode(2, 0.3)
+    bubble["base0"]:onEnter(function(evtData)
+        local tu = evtData.triggerUnit
+        if (enemyTeam:is(tu)) then
+            effector.point("MassTeleportTarget", tu:x(), tu:y(), nil, 0.5)
+            class.destroy(tu)
+            baseHP = baseHP - 1
+            if (baseHP <= 0) then
+                local tips = "被突破咯~"
+                for i = 1, 4, 1 do
+                    Player(i):quit(tips)
+                end
             end
         end
     end)
-    bubble.monTimer = time.setInterval(1, function(curTimer)
-        curTimer:period(60)
+    for pi, p in ipairs(points) do
+        local route = p.route
+        for i = 1, #route - 1, 1 do
+            local k = "r" .. pi .. '-' .. i
+            local rt = route[i]
+            local next = route[i + 1]
+            local r = Region(k, "square", rt[1], rt[2], 120, 120)
+            r:setEventMode(2, 0.2)
+            r:onEnter(function(evtData)
+                if (enemyTeam:is(evtData.triggerUnit)) then
+                    evtData.triggerUnit:orderMove(next[1], next[2])
+                end
+            end)
+            -- 调试模式搞点贴图方便看
+            if (LK_DEBUG) then
+                r:splat("PathTextures\\WayGate.tga", 150)
+            end
+            bubble[k] = r
+        end
+    end
+    
+    bubble.monTimer = time.setInterval(period, function(curTimer)
         cur = cur + 1
         if (cur >= wave) then
             class.destroy(curTimer)
@@ -86,7 +109,7 @@ function process:onStart()
         local i = 0
         bubble.monTimer2 = time.setInterval(1, function(curTimer2)
             i = i + 1
-            if (i >= qty) then
+            if (i > qty) then
                 class.destroy(curTimer2)
                 return
             end
@@ -95,7 +118,7 @@ function process:onStart()
                     local start = p.start
                     local route = p.route
                     local u = Unit(enemyTeam, TPL_UNIT.Empty, start[1], start[2], start[3])
-                    u:orderRoute(false, route)
+                    u:orderMove(route[1][1], route[1][2])
                 end
             end
         end)

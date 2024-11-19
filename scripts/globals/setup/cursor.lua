@@ -38,7 +38,7 @@ game.onPhase("process", function()
         local tx, ty = -1, -1
         local tips, textAlign
         local fontSize = 9
-        if (nil ~= class._cache[GridClass] and nil ~= class._cache[GridClass][ItemClass]) then
+        if (isGrid(ItemClass)) then
             --- Prioritize search Item
             under = Grid(ItemClass):closest({
                 circle = {
@@ -134,6 +134,11 @@ game.onPhase("process", function()
             alpha = 150,
             enable = BLP_COLOR_LIGHT_BLUE,
             disable = BLP_COLOR_RED,
+        },
+        build = {
+            alpha = 255,
+            enable = "cursor\\buildWhite.tga",
+            disable = "cursor\\buildRed.tga",
         },
     }
     
@@ -549,7 +554,7 @@ game.onPhase("process", function()
                 x = japi.DZ_GetMouseTerrainX(),
                 y = japi.DZ_GetMouseTerrainY(),
             }
-            if (ab:isBanCursor(cond)) then
+            if (ab:isCursorBaning(cond)) then
                 alerter.message(evtData.triggerPlayer, "无效目标")
                 return
             end
@@ -682,7 +687,7 @@ game.onPhase("process", function()
                 end
             end
             local texture
-            if (ab:isBanCursor({ x = tx, y = ty, radius = curSize, units = newUnits })) then
+            if (ab:isCursorBaning({ x = tx, y = ty, radius = curSize, units = newUnits })) then
                 texture = circleParams.disable or circleParams.enable
             else
                 texture = circleParams.enable
@@ -728,7 +733,7 @@ game.onPhase("process", function()
                 radius = _int1 or ab:castRadius(),
                 units = _unit1,
             }
-            if (ab:isBanCursor(cond)) then
+            if (ab:isCursorBaning(cond)) then
                 alerter.message(evtData.triggerPlayer, "无效范围")
                 return
             end
@@ -852,7 +857,7 @@ game.onPhase("process", function()
                 end
             end
             local texture
-            if (ab:isBanCursor({ x = tx, y = ty, width = curWidth, height = curHeight, units = newUnits })) then
+            if (ab:isCursorBaning({ x = tx, y = ty, width = curWidth, height = curHeight, units = newUnits })) then
                 texture = csTexture.square.disable or csTexture.square.enable
             else
                 texture = csTexture.square.enable
@@ -908,7 +913,7 @@ game.onPhase("process", function()
                 cond.height = ab:castHeight()
                 cond.width = ab:castWidth()
             end
-            if (ab:isBanCursor(cond)) then
+            if (ab:isCursorBaning(cond)) then
                 alerter.message(evtData.triggerPlayer, "无效范围")
                 return
             end
@@ -917,6 +922,82 @@ game.onPhase("process", function()
             else
                 sync.send("lk_sync_g", { "ability_effective_xyz", ab:id(), cond.x, cond.y, japi.DZ_GetMouseTerrainZ() })
             end
+            cursor.quoteOver()
+        end,
+    })
+    
+    cursor.setQuote(ability.targetType.build, {
+        start = function()
+            local data = cursor.currentData()
+            local ab = data.ability
+            if (false == abilityStart(ab)) then
+                return false
+            end
+            sound.vcm("war3_MouseClick1")
+            csPointer:alpha(0)
+        end,
+        over = function()
+            csArea:show(false)
+            abilityOver()
+        end,
+        ---@param evtData eventOnMouseMove
+        refresh = function(evtData)
+            local data = cursor.currentData()
+            ---@type Ability
+            local ab = data.ability
+            if (false == class.isObject(ab, AbilityClass)) then
+                cursor.quoteOver()
+                return
+            end
+            ---@type Unit
+            local bu = ab:bindUnit()
+            if (ab:isBan() or ab:coolingRemain() > 0 or false == class.isObject(bu, UnitClass)) then
+                cursor.quoteOver()
+                return
+            end
+            local rx, ry = evtData.rx, evtData.ry
+            if (true ~= mouse.isSafety(rx, ry)) then
+                csArea:show(false)
+                return
+            end
+            local x = japi.DZ_GetMouseTerrainX()
+            local y = japi.DZ_GetMouseTerrainY()
+            local width = ab:castWidth()
+            local height = ab:castHeight()
+            local cpd = ab:cursorPlanDistance() or 1
+            x = cpd * math.round(x / cpd)
+            y = cpd * math.round(y / cpd)
+            local texture
+            if (ab:isCursorBaning({ x = x, y = y, width = width, height = height })) then
+                texture = csTexture.build.disable or csTexture.build.enable
+            else
+                texture = csTexture.build.enable
+            end
+            csArea:rgba(255, 255, 255, csTexture.build.alpha)
+            csArea:texture(texture)
+            csArea:size(width, height)
+            csArea:position(x, y)
+            csArea:show(true)
+        end,
+        ---@param evtData eventOnMouseLeftClick
+        leftClick = function(evtData)
+            local data = cursor.currentData()
+            local ab = data.ability
+            if (true ~= mouse.isSafety(evtData.rx, evtData.ry)) then
+                return
+            end
+            local x = japi.DZ_GetMouseTerrainX()
+            local y = japi.DZ_GetMouseTerrainY()
+            local width = ab:castWidth()
+            local height = ab:castHeight()
+            local cpd = ab:cursorPlanDistance() or 1
+            x = cpd * math.round(x / cpd)
+            y = cpd * math.round(y / cpd)
+            if (ab:isCursorBaning({ x = x, y = y, width = width, height = height })) then
+                alerter.message(evtData.triggerPlayer, "无效区域")
+                return
+            end
+            sync.send("lk_sync_g", { "ability_effective_xyz", ab:id(), x, y, japi.DZ_GetMouseTerrainZ() })
             cursor.quoteOver()
         end,
     })

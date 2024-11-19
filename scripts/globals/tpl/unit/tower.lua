@@ -1,0 +1,13 @@
+--- 塔1
+TPL_UNIT.Tower1 = UnitTpl("", "pathTex4x_ss")
+    :name("塔1")
+    :model("HumanTower")
+    :animateProperties({ "upgrade", "first" })
+    :icon("ReplaceableTextures\\CommandButtons\\BTNGuardTower.blp")
+    :attack(5)
+    :assault(Assault({ mode = "missile", model = "GuardTowerMissile", homing = true, height = 100, speed = 800 }))
+    :attackSpaceBase(2)
+    :attackRange(800)
+    :hp(100)
+    :modelScale(0.9)
+    :scale(1.7)

@@ -1,4 +1,3 @@
-
 --【 音效 】
 
 assets_vcm("Sound\\Interface\\Error.wav", "war3_Error")
@@ -9,3 +8,4 @@ assets_vcm("Sound\\Interface\\MouseClick2.wav", "war3_MouseClick2")
 assets_vcm("Sound\\Interface\\PickUpItem.wav", "war3_PickUpItem")
 assets_vcm("Sound\\Interface\\QuestLog.wav", "war3_QuestLog")
 assets_vcm("Sound\\Interface\\ReceiveGold.wav", "war3_ReceiveGold")
+assets_vcm("Sound\\Buildings\\Shared\\BuildingPlacement.wav", "war3_BuildingPlacement")

@@ -1,4 +1,4 @@
-local process = Process("test1")
+local process = Process("test4")
 
 function process:onStart()
     
@@ -21,6 +21,7 @@ function process:onStart()
             bubble["builder" .. i] = u
         end
     end
+    
     ---@param evtData eventOnKeyboardRelease
     keyboard.onRelease(keyboard.code["F1"], "builder", function(evtData)
         local idx = evtData.triggerPlayer:index()
@@ -39,67 +40,42 @@ function process:onStart()
     local wave = 100 -- 100波
     local period = 60 -- 初始周期
     local qty = 10 -- 每地点出怪数量
+    local baseHP = 999
+    ---@param orderUnit Unit
+    local endPoint = function(orderUnit)
+        effector.point("MassTeleportTarget", orderUnit:x(), orderUnit:y(), nil, 0.5)
+        class.destroy(orderUnit)
+        baseHP = baseHP - 1
+        if (baseHP <= 0) then
+            local tips = "被突破咯~"
+            for i = 1, 4, 1 do
+                Player(i):quit(tips)
+            end
+        end
+    end
     -- 出怪地点
     local points = {
         {
             -- 左上
             start = { -2560, 2560, 270 },
-            route = { { -2560, 1024 }, { -1280, 1024 }, { -1280, 2048 }, { 0, 2048 }, { 0, 0 } }
+            route = { { -2560, 1024 }, { -1280, 1024 }, { -1280, 2048 }, { 0, 2048 }, { 0, 0, endPoint } }
         },
         {
             -- 右上
             start = { 2560, 2560, 180 },
-            route = { { 1024, 2560 }, { 1024, 1280 }, { 2048, 1280 }, { 2048, 0 }, { 0, 0 } }
+            route = { { 1024, 2560 }, { 1024, 1280 }, { 2048, 1280 }, { 2048, 0 }, { 0, 0, endPoint } }
         },
         {
             -- 左下
             start = { -2560, -2560, 0 },
-            route = { { -1024, -2560 }, { -1024, -1280 }, { -2048, -1280 }, { -2048, 0 }, { 0, 0 } }
+            route = { { -1024, -2560 }, { -1024, -1280 }, { -2048, -1280 }, { -2048, 0 }, { 0, 0, endPoint } }
         },
         {
             -- 右下
             start = { 2560, -2560, 90 },
-            route = { { 2560, -1024 }, { 1280, -1024 }, { 1280, -2048 }, { 0, -2048 }, { 0, 0 } }
+            route = { { 2560, -1024 }, { 1280, -1024 }, { 1280, -2048 }, { 0, -2048 }, { 0, 0, endPoint } }
         },
     }
-    local baseHP = 999
-    bubble["base0"] = Region("base0", "square", 0, 0, 150, 150)
-    bubble["base0"]:setEventMode(1)
-    bubble["base0"]:onEnter(function(evtData)
-        local tu = evtData.triggerUnit
-        if (enemyTeam:is(tu)) then
-            effector.point("MassTeleportTarget", tu:x(), tu:y(), nil, 0.5)
-            class.destroy(tu)
-            baseHP = baseHP - 1
-            if (baseHP <= 0) then
-                local tips = "被突破咯~"
-                for i = 1, 4, 1 do
-                    Player(i):quit(tips)
-                end
-            end
-        end
-    end)
-    for pi, p in ipairs(points) do
-        local route = p.route
-        for i = 1, #route - 1, 1 do
-            local k = "r" .. pi .. '-' .. i
-            local rt = route[i]
-            local next = route[i + 1]
-            local r = Region(k, "square", rt[1], rt[2], 120, 120)
-            r:setEventMode(1)
-            r:onEnter(function(evtData)
-                if (enemyTeam:is(evtData.triggerUnit)) then
-                    evtData.triggerUnit:orderMove(next[1], next[2])
-                end
-            end)
-            -- 调试模式搞点贴图方便看
-            if (LK_DEBUG) then
-                r:splat("PathTextures\\WayGate.tga", 150)
-            end
-            bubble[k] = r
-        end
-    end
-    
     bubble.monTimer = time.setInterval(period, function(curTimer)
         cur = cur + 1
         if (cur >= wave) then
@@ -107,7 +83,7 @@ function process:onStart()
             return
         end
         local i = 0
-        bubble.monTimer2 = time.setInterval(1, function(curTimer2)
+        bubble.monTimer2 = time.setInterval(0.03, function(curTimer2)
             i = i + 1
             if (i > qty) then
                 class.destroy(curTimer2)
@@ -118,7 +94,7 @@ function process:onStart()
                     local start = p.start
                     local route = p.route
                     local u = Unit(enemyTeam, TPL_UNIT.Empty, start[1], start[2], start[3])
-                    u:orderMove(route[1][1], route[1][2])
+                    u:orderRoute(false, route)
                 end
             end
         end)
