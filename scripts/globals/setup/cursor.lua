@@ -49,7 +49,12 @@ game.onPhase("process", function()
             })
             if (class.isObject(under, ItemClass)) then
                 japi.DZ_SetEffectVertexAlpha(under._handle._handle, 255)
-                local cx, cy = japi.ConvertWorldPosition(under:x(), under:y(), under:z())
+                if (nil ~= japi and nil ~= japi.ConvertWorldPosition) then
+                    local cx, cy = japi.ConvertWorldPosition(under:x(), under:y(), under:z())
+                    tx, ty = japi.UIDisAdaptive(cx), cy + 0.024
+                else
+                    tx, ty = japi.UIDisAdaptive(evtData.rx), evtData.ry + 0.024
+                end
                 tx, ty = japi.UIDisAdaptive(cx), cy + 0.024
                 if (under:level() > 0 and under:levelMax() > 1) then
                     tips = { "品级 " .. under:level() .. '/' .. under:levelMax(), under:name() }
