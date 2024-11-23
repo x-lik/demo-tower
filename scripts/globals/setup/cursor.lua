@@ -55,7 +55,6 @@ game.onPhase("process", function()
                 else
                     tx, ty = japi.UIDisAdaptive(evtData.rx), evtData.ry + 0.024
                 end
-                tx, ty = japi.UIDisAdaptive(cx), cy + 0.024
                 if (under:level() > 0 and under:levelMax() > 1) then
                     tips = { "品级 " .. under:level() .. '/' .. under:levelMax(), under:name() }
                 else
@@ -66,7 +65,7 @@ game.onPhase("process", function()
         end
         if (nil == under) then
             --- Then look for the Unit
-            under = class.h2o(japi.DZ_GetUnitUnderMouse())
+            under = class.h2u(japi.DZ_GetUnitUnderMouse())
             if (class.isObject(under, UnitClass)) then
                 if (under:owner() ~= evtData.triggerPlayer and false == under:isEnemy(evtData.triggerPlayer)) then
                     tx, ty = japi.UIDisAdaptive(evtData.rx), evtData.ry + 0.024
@@ -559,7 +558,8 @@ game.onPhase("process", function()
                 x = japi.DZ_GetMouseTerrainX(),
                 y = japi.DZ_GetMouseTerrainY(),
             }
-            if (ab:isCursorBaning(cond)) then
+            local ccr = ab:cursorCondResult(cond)
+            if (0 ~= ccr) then
                 alerter.message(evtData.triggerPlayer, "无效目标")
                 return
             end
@@ -691,8 +691,9 @@ game.onPhase("process", function()
                     end
                 end
             end
+            local ccr = ab:cursorCondResult({ x = tx, y = ty, radius = curSize, units = newUnits })
             local texture
-            if (ab:isCursorBaning({ x = tx, y = ty, radius = curSize, units = newUnits })) then
+            if (0 ~= ccr) then
                 texture = circleParams.disable or circleParams.enable
             else
                 texture = circleParams.enable
@@ -738,7 +739,8 @@ game.onPhase("process", function()
                 radius = _int1 or ab:castRadius(),
                 units = _unit1,
             }
-            if (ab:isCursorBaning(cond)) then
+            local ccr = ab:cursorCondResult(cond)
+            if (0 ~= ccr) then
                 alerter.message(evtData.triggerPlayer, "无效范围")
                 return
             end
@@ -861,8 +863,9 @@ game.onPhase("process", function()
                     end
                 end
             end
+            local ccr = ab:cursorCondResult({ x = tx, y = ty, width = curWidth, height = curHeight, units = newUnits })
             local texture
-            if (ab:isCursorBaning({ x = tx, y = ty, width = curWidth, height = curHeight, units = newUnits })) then
+            if (0 ~= ccr) then
                 texture = csTexture.square.disable or csTexture.square.enable
             else
                 texture = csTexture.square.enable
@@ -918,7 +921,8 @@ game.onPhase("process", function()
                 cond.height = ab:castHeight()
                 cond.width = ab:castWidth()
             end
-            if (ab:isCursorBaning(cond)) then
+            local ccr = ab:cursorCondResult(cond)
+            if (0 ~= ccr) then
                 alerter.message(evtData.triggerPlayer, "无效范围")
                 return
             end
@@ -969,11 +973,12 @@ game.onPhase("process", function()
             local y = japi.DZ_GetMouseTerrainY()
             local width = ab:castWidth()
             local height = ab:castHeight()
-            local cpd = ab:cursorPlanDistance() or 1
+            local cpd = ab:get("cursorPlanDistance") or 1
             x = cpd * math.round(x / cpd)
             y = cpd * math.round(y / cpd)
+            local ccr = ab:cursorCondResult({ x = x, y = y, width = width, height = height })
             local texture
-            if (ab:isCursorBaning({ x = x, y = y, width = width, height = height })) then
+            if (0 ~= ccr) then
                 texture = csTexture.build.disable or csTexture.build.enable
             else
                 texture = csTexture.build.enable
@@ -995,10 +1000,11 @@ game.onPhase("process", function()
             local y = japi.DZ_GetMouseTerrainY()
             local width = ab:castWidth()
             local height = ab:castHeight()
-            local cpd = ab:cursorPlanDistance() or 1
+            local cpd = ab:get("cursorPlanDistance") or 1
             x = cpd * math.round(x / cpd)
             y = cpd * math.round(y / cpd)
-            if (ab:isCursorBaning({ x = x, y = y, width = width, height = height })) then
+            local ccr = ab:cursorCondResult({ x = x, y = y, width = width, height = height })
+            if (0 ~= ccr) then
                 alerter.message(evtData.triggerPlayer, "无效区域")
                 return
             end
