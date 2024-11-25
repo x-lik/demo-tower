@@ -1,6 +1,6 @@
 --- 敌人单位
 TPL_UNIT.Empty = UnitTpl("Ghoul")
-    --:preNoPath()
+    :preNoPath()
     :preNoAttack()
     :name("食尸鬼")
     :model("Ghoul")
