@@ -1,5 +1,5 @@
 --- 玩家建造者
-TPL_UNIT.Builder = UnitTpl("Peasant")
+TPL_UNIT.Builder = UnitTpl("Peasant", "avatar")
     :preAbility({ TPL_ABILITY.Build })
     :name("伟大的建造者")
     :model("Peasant")
