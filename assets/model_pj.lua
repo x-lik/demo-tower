@@ -1,0 +1,1 @@
+assets_model("hero/DireTroll", "DireTroll")

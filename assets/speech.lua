@@ -104,9 +104,7 @@ assets_speech("StormPandarenBrewmaster")
 --熊猫烈焰
 assets_speech("FirePandarenBrewmaster")
 --农民
-assets_speech("Peasant", {
-    avatar = assets_speech_extra({ model = "Peasant" })
-})
+assets_speech("Peasant")
 --步兵
 assets_speech("Footman")
 --骑士
