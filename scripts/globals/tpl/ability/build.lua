@@ -33,7 +33,7 @@ TPL_ABILITY.Build = AbilityTpl()
             end
         end
         -- 已经有建筑挡住了
-        if (false == status and isGrid("towers")) then
+        if (0 == status and isGrid("towers")) then
             local ts = Grid("towers"):catch({
                 limit = 1,
                 square = data
