@@ -13,7 +13,7 @@ TPL_ABILITY.Build = AbilityTpl()
     :cursorCond(
     function(data)
         local terr = terrain.kind.lords_dirt -- =1281651316 在此游戏中的泥土地形
-        if (terr ~= terrain.getKind(data.x, data.y)) then
+        if (false == terrain.isKind(data.x, data.y, terr)) then
             return -1
         end
         -- 5点辩证法，必须全部点与z近似高度
@@ -27,7 +27,7 @@ TPL_ABILITY.Build = AbilityTpl()
         local status = 0
         for _, p in ipairs(ps) do
             local z2 = japi.Z(p[1], p[2])
-            if (math.abs(z2 - z) > 16 or terr ~= terrain.getKind(p[1], p[2])) then
+            if (math.abs(z2 - z) > 16 or false == terrain.isKind(p[1], p[2], terr)) then
                 status = -1
                 break
             end
