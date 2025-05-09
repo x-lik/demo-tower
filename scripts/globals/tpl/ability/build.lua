@@ -1,11 +1,9 @@
-ability.targetType.build = { value = "b", label = "建筑" }
-
 ---@param abData eventOnAbilityEffective
 TPL_ABILITY.Build = AbilityTpl()
     :name("建造")
     :icon("ReplaceableTextures\\CommandButtons\\BTNHumanBuild.blp")
     :description("建造一个塔")
-    :targetType(ability.targetType.build)
+    :targetType(ability.targetType.building)
     :castWidthAdv(128, 0)
     :castHeightAdv(128, 0)
     :worthCostAdv({ gold = 1 }, nil)
